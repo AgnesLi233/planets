@@ -178,9 +178,22 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<p>For this project, we will perform our analysis based on the NASA Exoplanet Archive, an online astronomical catalog and data service maintained by the NASA Exoplanet Science Institute at Caltech (see link below). This archive collates and cross-correlates astronomical data on exoplanets and their host stars and updates on a weekly basis. All data in this archive are vetted by a team of astronomers and are linked back to the original literature reference. The data is accessible via online interactive tables and is also provided in downloadable tabular format such including csv. The dataset has 121 columns and 36557 rows, and includes exoplanet parameters (e.g., masses, radius, eccentricity), host information, and discovery/characterization data (e.g., discovery year, facility, method). Given the large number of available columns in the dataset, we will selectively download only those fields relevant to our analysis as a csv file and import using R and Python to avoid unnecessary complexity.</p>
+<p>The following columns are selected for download and analysis (subjected to change): - pl_name: Planet Name - hostname: Host Name - sy_snum: Number of Stars - sy_pnum: Number of Planets - discoverymethod: Discovery Method - disc_year: Discovery Year - disc_locale: Discovery Locale - disc_facility: Discovery Facility - disc_telescope: Discovery Telescope - disc_instrument: Discovery Instrument - pl_orbper: Orbital Period [days] - pl_rade: Planet Radius [Earth Radius] - pl_radj: Planet Radius [Jupiter Radius] - pl_bmasse: Planet Mass or Mass*sin(i) [Earth Mass] - pl_orbeccen: Eccentricity - sy_dist: Distance [pc] - sy_gaiamag: Gaia Magnitude - rowupdate: Date of Last Update</p>
+<p><strong>Link to NASA Expoplanet Archieve:</strong> https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&amp;config=PS</p>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="code/graph/missing_value_bar.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The bar chart of missing value shows that essential columns such as pl_name, hostname, and discoverymethod have no missing values; while key planetary attributes like pl_bmasse (82.8% missing) and pl_orbeccen (49.9% missing) show significant gaps, likely due to limitations in detection methods; other columns like pl_rade and pl_radj have moderate missing values (31.8%), often related to the difficulty in measuring certain physical properties of exoplanets. These missing values may impact some part of the analysis, particularly in examining planetary characteristics and dynamics. However, it will be impact our analysis on the evolution of detection methods.</p>
 
 
 </section>

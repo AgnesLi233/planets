@@ -1,0 +1,41 @@
+## Load Library
+```{r}
+library(readr)
+library(tidyverse)
+```
+
+## Import Raw Data File
+```{r}
+#| warning: false
+exoplanets <- read_csv("../data/raw/exoplanets.csv")
+
+exoplanets <- exoplanets |>
+  select(-loc_rowid)
+
+head(exoplanets)
+```
+## Bar Chart of Missing Values
+```{r}
+# generate percentage of missing values
+missing_values <- exoplanets |>
+  summarise(across(everything(), 
+                   ~ mean(is.na(.)) * 100)) |>
+  pivot_longer(cols = everything(), 
+               names_to = "Column", 
+               values_to = "Missing_Percentage")
+missing_values
+```
+
+```{r}
+# plot missing value
+missing_values|>
+  ggplot(aes(x = reorder(Column, Missing_Percentage),
+             y = Missing_Percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Percentage of Missing Values per Column",
+       x = "Columns",
+       y = "Missing Percentage (%)") +
+  theme_minimal()
+```
+
