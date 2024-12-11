@@ -5,24 +5,24 @@ For this project, we will perform our analysis based on the NASA Exoplanet Archi
 
 The following columns are selected for download and analysis (subjected to change): 
 
--  pl_name: Planet Name
--  hostname: Host Name
--  sy_snum: Number of Stars
--  sy_pnum: Number of Planets
--  discoverymethod: Discovery Method
--  disc_year: Discovery Year
--  disc_locale: Discovery Locale
--  disc_facility: Discovery Facility
--  disc_telescope: Discovery Telescope
--  disc_instrument: Discovery Instrument
--  pl_orbper: Orbital Period [days]
--  pl_rade: Planet Radius [Earth Radius]
--  pl_radj: Planet Radius [Jupiter Radius]
--  pl_bmasse: Planet Mass or Mass*sin(i) [Earth Mass]
--  pl_orbeccen: Eccentricity
--  sy_dist: Distance [pc]
--  sy_gaiamag: Gaia Magnitude
--  rowupdate: Date of Last Update
+* pl_name: Planet Name
+* hostname: Host Name
+* sy_snum: Number of Stars
+* sy_pnum: Number of Planets
+* discoverymethod: Discovery Method
+* disc_year: Discovery Year
+* disc_locale: Discovery Locale
+* disc_facility: Discovery Facility
+* disc_telescope: Discovery Telescope
+* disc_instrument: Discovery Instrument
+* pl_orbper: Orbital Period [days]
+* pl_rade: Planet Radius [Earth Radius]
+* pl_radj: Planet Radius [Jupiter Radius]
+* pl_bmasse: Planet Mass or Mass*sin(i) [Earth Mass]
+* pl_orbeccen: Eccentricity
+* sy_dist: Distance [pc]
+* sy_gaiamag: Gaia Magnitude
+* rowupdate: Date of Last Update
 
 **Link to NASA Expoplanet Archieve:** https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PS
 
