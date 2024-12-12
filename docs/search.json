@@ -20,16 +20,6 @@
     ]
   },
   {
-    "objectID": "data.html#missing-value-analysis",
-    "href": "data.html#missing-value-analysis",
-    "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis\n\n\n\n\n\n\n\n\n\nThe bar chart of missing value shows that essential columns such as pl_name, hostname, and discoverymethod have no missing values; while key planetary attributes like pl_bmasse (82.8% missing) and pl_orbeccen (49.9% missing) show significant gaps, likely due to limitations in detection methods; other columns like pl_rade and pl_radj have moderate missing values (31.8%), often related to the difficulty in measuring certain physical properties of exoplanets. These missing values may impact some part of the analysis, particularly in examining planetary characteristics and dynamics. However, it will be impact our analysis on the evolution of detection methods.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
     "objectID": "data.html#description",
     "href": "data.html#description",
     "title": "2  Data",
@@ -40,11 +30,21 @@
     ]
   },
   {
+    "objectID": "data.html#missing-value-analysis",
+    "href": "data.html#missing-value-analysis",
+    "title": "2  Data",
+    "section": "2.2 Missing value analysis",
+    "text": "2.2 Missing value analysis\n\n\n\n\n\n\n\n\n\nThe bar chart of missing value shows that essential columns such as pl_name, hostname, and discoverymethod have no missing values; while key planetary attributes like pl_bmasse (82.8% missing) and pl_orbeccen (49.9% missing) show significant gaps, likely due to limitations in detection methods; other columns like pl_rade and pl_radj have moderate missing values (31.8%), often related to the difficulty in measuring certain physical properties of exoplanets. These missing values may impact some part of the analysis, particularly in examining planetary characteristics and dynamics. However, it will be impact our analysis on the evolution of detection methods.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
     "objectID": "d3graph.html",
     "href": "d3graph.html",
     "title": "4  Interactive graph",
     "section": "",
-    "text": "Previous Year\n\n\nNext Year",
+    "text": "Previous Year\n\n\nNext Year\n\n\n\n[temp]",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
     ]
