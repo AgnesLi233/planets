@@ -40,3 +40,29 @@ discovery
 # save to csv
 write_csv(discovery, "processed_data/discovery.csv")
 ```
+
+```{r}
+# only the total discovery of each year
+discovery_sum <- discovery |>
+  select(disc_year,TotalDiscovered)
+
+discovery_sum
+```
+
+```{r}
+write_csv(discovery_sum, "processed_data/discovery_sum.csv")
+```
+
+```{r}
+result <- discovery %>%
+  rowwise() %>%
+  mutate(
+    MostUsedMethod = names(which.max(across(`Pulsar Timing`:`Disk Kinematics`))),
+    MostUsedCount = max(across(`Pulsar Timing`:`Disk Kinematics`)),
+    MaxPercentage = (MostUsedCount / TotalDiscovered) * 100
+  ) %>%
+  ungroup() %>%
+  select(disc_year, TotalDiscovered, MostUsedMethod, MostUsedCount, MaxPercentage)
+
+result
+```
