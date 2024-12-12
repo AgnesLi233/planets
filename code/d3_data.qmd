@@ -1,0 +1,42 @@
+---
+title: "d3_data"
+editor: visual
+---
+
+```{r}
+# setup 
+library(dplyr)
+library(readr)
+```
+
+```{r}
+#| warning: false
+# load dataset
+df <- read_csv("../data/raw/exoplanets.csv")
+
+# Inspect the dataset
+head(df)
+```
+
+```{r}
+# Total Discovered by Year and Method
+discovery <- df |>
+  filter(!is.na(disc_year), !is.na(discoverymethod)) |>
+  group_by(disc_year, discoverymethod) |>
+  summarize(total = n(), .groups = "drop") |>
+  tidyr::pivot_wider(names_from = discoverymethod,
+                     values_from = total,
+                     values_fill = 0)
+
+discovery <- discovery |>
+  mutate(TotalDiscovered = rowSums(across(-disc_year)))
+```
+
+```{r}
+discovery
+```
+
+```{r}
+# save to csv
+write_csv(discovery, "processed_data/discovery.csv")
+```
