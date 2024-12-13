@@ -28,8 +28,42 @@ The following columns are selected for download and analysis:
 
 ## Missing value analysis
 
-```{r, echo=FALSE}
-knitr::include_graphics("code/graph/missing_value_bar.png")
+**Setup**
+```{r, output=FALSE}
+library(readr)
+library(tidyverse)
 ```
+
+**Import Data**
+```{r}
+#| warning: false
+exoplanets <- read_csv("data/raw/exoplanets.csv")
+
+exoplanets <- exoplanets |>
+  select(-loc_rowid)
+```
+
+**Analysis and Plot**
+```{r}
+# generate percentage of missing values
+missing_values <- exoplanets |>
+  summarise(across(everything(), 
+                   ~ mean(is.na(.)) * 100)) |>
+  pivot_longer(cols = everything(), 
+               names_to = "Column", 
+               values_to = "Missing_Percentage")
+
+# plot missing value
+missing_values|>
+  ggplot(aes(x = reorder(Column, Missing_Percentage),
+             y = Missing_Percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Percentage of Missing Values per Column",
+       x = "Columns",
+       y = "Missing Percentage (%)") +
+  theme_minimal()
+```
+
 
 The bar chart of missing value shows that essential columns such as pl_name, hostname, and discoverymethod have no missing values; while key planetary attributes like pl_bmasse (82.8% missing) and pl_orbeccen (49.9% missing) show significant gaps, likely due to limitations in detection methods; other columns like pl_rade and pl_radj have moderate missing values (31.8%), often related to the difficulty in measuring certain physical properties of exoplanets. These missing values may impact some part of the analysis, particularly in examining planetary characteristics and dynamics. However, it will be impact our analysis on the evolution of detection methods. 
