@@ -28,13 +28,13 @@ library(ggh4x)
 file_path <- "data/PS_2024.12.10_21.31.15.csv"
 exoplanet_data <- read.csv(file_path, header = TRUE)
 # Clean and filter data
-cleaned_data <- exoplanet_data %>%
+cleaned_data <- exoplanet_data |>
   mutate(
     disc_year = as.numeric(disc_year), 
     discoverymethod = as.factor(discoverymethod)  
-  ) %>%
+  ) |>
   filter(!is.na(disc_year), !is.na(discoverymethod)) 
-debugged_data <- cleaned_data %>%
+debugged_data <- cleaned_data |>
   filter(!is.na(disc_year), !is.na(discoverymethod))
 ```
 
@@ -57,14 +57,16 @@ Summary: The chart illustrates how the use of different detection methods contri
 
 ```{r}
 #| warning: false
-cumulative_data_by_method <- cleaned_data %>%
-  group_by(disc_year, discoverymethod) %>%
-  summarise(total_discoveries = n(), .groups = 'drop') %>%
-  group_by(discoverymethod) %>%
+cumulative_data_by_method <- cleaned_data |>
+  group_by(disc_year, discoverymethod) |>
+  summarise(total_discoveries = n(), .groups = 'drop') |>
+  group_by(discoverymethod) |>
   mutate(cumulative_discoveries = cumsum(total_discoveries))
 
 # Plot cumulative discoveries with breakdown by method
-ggplot(cumulative_data_by_method, aes(x = disc_year, y = cumulative_discoveries, color = discoverymethod)) +
+ggplot(cumulative_data_by_method, aes(x = disc_year,
+                                      y = cumulative_discoveries,
+                                      color = discoverymethod)) +
   geom_line(size = 1) +
   labs(title = "Cumulative Exoplanet Discoveries Over Time by Method",
        x = "Year", y = "Cumulative Discoveries",
@@ -72,7 +74,12 @@ ggplot(cumulative_data_by_method, aes(x = disc_year, y = cumulative_discoveries,
   theme_minimal(base_size = 12)+
   scale_color_brewer(palette = "Set1") +
   geom_vline(xintercept = 2009, linetype = "dashed", color = "gray") +
-  annotate("text", x = 2009, y = 5000, label = "Kepler Mission Launch", angle = 90, hjust = -0.1) +
+  annotate("text",
+           x = 2009,
+           y = 5000,
+           label = "Kepler Mission Launch",
+           angle = 90,
+           hjust = -0.1) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 Summary: This cumulative plot illustrates the number of exoplanets discovered using various detection methods over time. The radial velocity and transit methods dominate, showcasing significant growth, particularly after the Kepler mission’s launch in 2009. Other techniques, such as microlensing and imaging, have contributed modestly. The plot highlights how advancements in specific methods and dedicated missions have accelerated discoveries.
@@ -81,7 +88,7 @@ Summary: This cumulative plot illustrates the number of exoplanets discovered us
 
 ```{r}
 #| warning: false
-cleaned_data_modified <- cleaned_data %>%
+cleaned_data_modified <- cleaned_data |>
   mutate(discoverymethod = ifelse(discoverymethod %in% c("Astrometry",
                                                          "Disk Kinematics",
                                                          "Eclipse Timing Variations", 
@@ -93,12 +100,12 @@ cleaned_data_modified <- cleaned_data %>%
                                   "Other", discoverymethod))
 
 # Order methods by count
-method_order <- cleaned_data_modified %>%
-  count(discoverymethod, sort = TRUE) %>%
+method_order <- cleaned_data_modified |>
+  count(discoverymethod, sort = TRUE) |>
   pull(discoverymethod)
 
 # Update discoverymethod factor levels
-cleaned_data_modified <- cleaned_data_modified %>%
+cleaned_data_modified <- cleaned_data_modified |>
   mutate(discoverymethod = factor(discoverymethod, levels = method_order))
 
 # Create an enhanced bar chart
@@ -106,7 +113,8 @@ ggplot(cleaned_data_modified, aes(x = discoverymethod)) +
   geom_bar(aes(fill = discoverymethod), show.legend = FALSE) +
   coord_flip() +
   labs(title = "Distribution of Detection Methods",
-       x = "Discovery Method", y = "Number of Discoveries") +
+       x = "Discovery Method",
+       y = "Number of Discoveries") +
   geom_text(stat = "count", aes(label = after_stat(count)), hjust = -0.2, size = 3) +
   scale_fill_brewer(palette = "Paired") +
   theme_minimal(base_size = 14) +
@@ -120,8 +128,8 @@ Summary: This bar chart demonstrates the number of exoplanets discovered using v
 
 ```{r}
 #| warning: false
-filtered_data <- cleaned_data %>%
-  filter(discoverymethod %in% c("Transit", "Radial Velocity", "Imaging")) %>%
+filtered_data <- cleaned_data |>
+  filter(discoverymethod %in% c("Transit", "Radial Velocity", "Imaging")) |>
   filter(pl_rade > 0 & pl_rade < 50)  # Include only reasonable radii
 
 # Plot boxplots with filtered data
@@ -140,9 +148,9 @@ Summary: This boxplot illustrates the range of exoplanet radii detected by three
 
 ```{r}
 #| warning: false
-facility_data <- cleaned_data %>%
-  count(disc_facility, sort = TRUE) %>%
-  mutate(percent = (n / sum(n)) * 100) %>%
+facility_data <- cleaned_data |>
+  count(disc_facility, sort = TRUE) |>
+  mutate(percent = (n / sum(n)) * 100) |>
   top_n(10, n)  # Top 10 facilities
 
 # Create improved bar chart
@@ -232,8 +240,8 @@ Summary: This plot examines the relationship between eccentricity and orbital pe
 
 ```{r}
 #| warning: false
-avg_radius <- cleaned_data %>%
-  group_by(discoverymethod) %>%
+avg_radius <- cleaned_data |>
+  group_by(discoverymethod) |>
   summarise(
     avg_radius = mean(pl_rade, na.rm = TRUE),
     sd_radius = sd(pl_rade, na.rm = TRUE)
@@ -241,11 +249,13 @@ avg_radius <- cleaned_data %>%
 
 ggplot(avg_radius, aes(x = reorder(discoverymethod, -avg_radius), y = avg_radius, fill = discoverymethod)) +
   geom_bar(stat = "identity", alpha = 0.8, show.legend = FALSE) +
-  geom_errorbar(aes(ymin = avg_radius - sd_radius, ymax = avg_radius + sd_radius), width = 0.2) +
+  geom_errorbar(aes(ymin = avg_radius - sd_radius, ymax = avg_radius + sd_radius),
+                width = 0.2) +
   coord_flip() +
   labs(title = "Average Planet Radius by Detection Method with Variability",
        subtitle = "Error bars represent one standard deviation",
-       x = "Detection Method", y = "Average Radius (Earth Radii)") +
+       x = "Detection Method",
+       y = "Average Radius (Earth Radii)") +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(size = 16, face = "bold"),
@@ -257,9 +267,9 @@ Summary: This plot shows the average radius of planets detected by various metho
 **10. How do the yearly contributions of key astronomical facilities to exoplanet discoveries compare, and what trends are observed over time?**
 ```{r}
 #| warning: false
-facility_trend <- cleaned_data %>%
-  group_by(disc_year, disc_facility) %>%
-  summarise(count = n()) %>%
+facility_trend <- cleaned_data |>
+  group_by(disc_year, disc_facility) |>
+  summarise(count = n()) |>
   filter(disc_facility %in% c("Kepler", "TESS", "K2", "SuperWASP"))  # Include TESS
 
 ggplot(facility_trend, aes(x = disc_year, y = count, color = disc_facility)) +
@@ -269,7 +279,13 @@ ggplot(facility_trend, aes(x = disc_year, y = count, color = disc_facility)) +
        subtitle = "Kepler dominates discoveries in the 2010s",
        x = "Discovery Year", y = "Number of Discoveries",
        color = "Facility") +
-  annotate("text", x = 2014, y = 10500, label = "Kepler peaks", color = "green", angle = 40, size = 4) +
+  annotate("text",
+           x = 2014,
+           y = 10500,
+           label = "Kepler peaks",
+           color = "green",
+           angle = 40,
+           size = 4) +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(size = 16, face = "bold"),
