@@ -3,7 +3,7 @@
 ## Description
 For this project, we will perform our analysis based on the NASA Exoplanet Archive, an online astronomical catalog and data service maintained by the NASA Exoplanet Science Institute at Caltech (see link below). This archive collates and cross-correlates astronomical data on exoplanets and their host stars and updates on a weekly basis. All data in this archive are vetted by a team of astronomers and are linked back to the original literature reference. The data is accessible via online interactive tables and is also provided in downloadable tabular format such including csv. The dataset has 121 columns and 36557 rows, and includes exoplanet parameters (e.g., masses, radius, eccentricity), host information, and discovery/characterization data (e.g., discovery year, facility, method). Given the large number of available columns in the dataset, we will selectively download only those fields relevant to our analysis as a csv file and import using R and Python to avoid unnecessary complexity.
 
-The following columns are selected for download and analysis (subjected to change): 
+The following columns are selected for download and analysis: 
 
 * pl_name: Planet Name
 * hostname: Host Name
